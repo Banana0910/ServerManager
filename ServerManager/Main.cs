@@ -642,7 +642,7 @@ namespace ServerManager
             try
             {
                 p.StartInfo.FileName = "java.exe";
-                p.StartInfo.Arguments = $"-Xms{minmemory}M -Xmx{maxmemory}M -jar {RunJarpath} {((nogui_checkbox.Checked) ? "nogui" : "")}"; //nogui_checkbox가 체크됬으면 nogui인수 추가 아니면 그냥 ㄱㄱ
+                p.StartInfo.Arguments = $"-Xms{minmemory}M -Xmx{maxmemory}M -jar \"{RunJarpath}\"{((nogui_checkbox.Checked) ? " nogui" : "")}"; //nogui_checkbox가 체크됬으면 nogui인수 추가 아니면 그냥 ㄱㄱ
                 p.StartInfo.UseShellExecute = false;
                 p.StartInfo.CreateNoWindow = true;
                 p.StartInfo.RedirectStandardOutput = true;
@@ -734,7 +734,8 @@ namespace ServerManager
             else
             {
                 string path = Application.StartupPath; //왠만하면 이 프로그램은 서버 폴더 안에서 동작해야하기 때문에
-                if (CheckSeverDir(path) == true) ActiveManage(path);
+                if (CheckSeverDir(path)) 
+                    ActiveManage(path);
                 else
                 {
                     MessageBox.Show("서버 매니저는 서버 폴더 내에서 작동되는 걸 지극히 권장 드립니다!", "SeverManager", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -748,8 +749,11 @@ namespace ServerManager
             minmemory = Properties.Settings.Default.MinMemory;
             maxmemory = Properties.Settings.Default.MaxMemory;
 
-            MinMemoryBox.Text = (string.IsNullOrWhiteSpace(minmemory)) ? "512" : minmemory;
-            MaxMemoryBox.Text = (string.IsNullOrWhiteSpace(maxmemory)) ? "1024" : maxmemory;
+            minmemory = (string.IsNullOrWhiteSpace(minmemory)) ? "512" : minmemory;
+            maxmemory = (string.IsNullOrWhiteSpace(maxmemory)) ? "1024" : maxmemory;
+
+            MinMemoryBox.Text = minmemory;
+            MaxMemoryBox.Text = maxmemory;
         }
         private void Main_KeyUp(object sender, KeyEventArgs e)
         {
