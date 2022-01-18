@@ -521,6 +521,7 @@
             this.leveltypebox.Name = "leveltypebox";
             this.leveltypebox.Size = new System.Drawing.Size(81, 22);
             this.leveltypebox.TabIndex = 35;
+            this.leveltypebox.Tag = "level-type";
             // 
             // label22
             // 
@@ -543,6 +544,7 @@
             this.hardcoreBox.Name = "hardcoreBox";
             this.hardcoreBox.Size = new System.Drawing.Size(81, 22);
             this.hardcoreBox.TabIndex = 33;
+            this.hardcoreBox.Tag = "hardcore";
             // 
             // label18
             // 
@@ -565,6 +567,7 @@
             this.commandblockBox.Name = "commandblockBox";
             this.commandblockBox.Size = new System.Drawing.Size(81, 22);
             this.commandblockBox.TabIndex = 31;
+            this.commandblockBox.Tag = "enable-command-block";
             // 
             // label17
             // 
@@ -616,6 +619,7 @@
             this.forcegamemodeBox.Name = "forcegamemodeBox";
             this.forcegamemodeBox.Size = new System.Drawing.Size(81, 22);
             this.forcegamemodeBox.TabIndex = 26;
+            this.forcegamemodeBox.Tag = "force-gamemode";
             // 
             // label15
             // 
@@ -660,6 +664,7 @@
             this.spawnmonsterBox.Name = "spawnmonsterBox";
             this.spawnmonsterBox.Size = new System.Drawing.Size(81, 22);
             this.spawnmonsterBox.TabIndex = 22;
+            this.spawnmonsterBox.Tag = "spawn-monsters";
             // 
             // label13
             // 
@@ -682,6 +687,7 @@
             this.pvpBox.Name = "pvpBox";
             this.pvpBox.Size = new System.Drawing.Size(81, 22);
             this.pvpBox.TabIndex = 20;
+            this.pvpBox.Tag = "pvp";
             // 
             // label12
             // 
@@ -707,6 +713,7 @@
             this.oplevelBox.Name = "oplevelBox";
             this.oplevelBox.Size = new System.Drawing.Size(81, 22);
             this.oplevelBox.TabIndex = 18;
+            this.oplevelBox.Tag = "op-permission-level";
             // 
             // label11
             // 
@@ -729,6 +736,7 @@
             this.spawnanimalBox.Name = "spawnanimalBox";
             this.spawnanimalBox.Size = new System.Drawing.Size(81, 22);
             this.spawnanimalBox.TabIndex = 16;
+            this.spawnanimalBox.Tag = "spawn-animals";
             // 
             // onlinemodeBox
             // 
@@ -742,6 +750,7 @@
             this.onlinemodeBox.Name = "onlinemodeBox";
             this.onlinemodeBox.Size = new System.Drawing.Size(81, 22);
             this.onlinemodeBox.TabIndex = 15;
+            this.onlinemodeBox.Tag = "online-mode";
             // 
             // label10
             // 
@@ -769,6 +778,7 @@
             this.viewdistanceBox.Name = "viewdistanceBox";
             this.viewdistanceBox.Size = new System.Drawing.Size(81, 22);
             this.viewdistanceBox.TabIndex = 11;
+            this.viewdistanceBox.Tag = "view-distance";
             // 
             // label8
             // 
@@ -796,6 +806,7 @@
             this.maxplayerBox.Name = "maxplayerBox";
             this.maxplayerBox.Size = new System.Drawing.Size(81, 22);
             this.maxplayerBox.TabIndex = 8;
+            this.maxplayerBox.Tag = "max-players";
             // 
             // label6
             // 
@@ -820,6 +831,7 @@
             this.initalgamemodeBox.Name = "initalgamemodeBox";
             this.initalgamemodeBox.Size = new System.Drawing.Size(81, 22);
             this.initalgamemodeBox.TabIndex = 6;
+            this.initalgamemodeBox.Tag = "gamemode";
             // 
             // label5
             // 
@@ -847,6 +859,7 @@
             this.SpawnProtectionBox.Name = "SpawnProtectionBox";
             this.SpawnProtectionBox.Size = new System.Drawing.Size(81, 22);
             this.SpawnProtectionBox.TabIndex = 3;
+            this.SpawnProtectionBox.Tag = "spawn-protection";
             // 
             // label3
             // 
@@ -871,6 +884,7 @@
             this.difficultyBox.Name = "difficultyBox";
             this.difficultyBox.Size = new System.Drawing.Size(81, 22);
             this.difficultyBox.TabIndex = 1;
+            this.difficultyBox.Tag = "difficulty";
             // 
             // label2
             // 

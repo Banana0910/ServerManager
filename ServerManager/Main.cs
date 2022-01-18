@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace ServerManager
 {
@@ -11,7 +12,9 @@ namespace ServerManager
     {
         public Main() { InitializeComponent(); }
 
-        //            정의 파트              //
+         //                                     //
+        //             정의 파트               //
+       //                                    //
 
         Process p = new Process();
         string ServerPath = "";
@@ -29,7 +32,32 @@ namespace ServerManager
 
         //             함수 파트               //
 
-        //확인 함수들
+        // 목적 : properties에 원하는 key가 없을 경우, 추가를 해야함
+        // 목적을 이룰려면 리스트로 미리 불러오는게 맞나..?
+
+        // 문제 : 각 property 형식마다 반환하는 value가 다름
+       
+        // 프로퍼티 관리 함수
+        private List<string> return_property(List<string> list)
+        {
+            /* textbox 형식
+                SpawnProtectionBox
+                maxplayerBox
+                viewdistanceBox
+            */
+            Control[] properties = new Control[]
+            { 
+                difficultyBox, SpawnProtectionBox, initalgamemodeBox, forcegamemodeBox, maxplayerBox,
+                viewdistanceBox, onlinemodeBox, oplevelBox, pvpBox, spawnmonsterBox, spawnnpcBox,
+                spawnanimalBox, commandblockBox, hardcoreBox, leveltypebox 
+            };
+            foreach (Control cb in properties)
+            {
+            }
+            return null;
+        }
+
+        // 확인 함수
         private bool CheckWorldDir(string path)
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(path);
@@ -343,7 +371,8 @@ namespace ServerManager
         }
         private void WriteProperties()
         {
-            string properties = "";
+            //string properties = "";
+            List<string> properties = new List<string>();
             FileStream fs = new FileStream(server_properties_path, FileMode.Open);
             StreamReader sr = new StreamReader(fs);
             while (true)
@@ -355,7 +384,9 @@ namespace ServerManager
                     fs.Close();
                     break;
                 }
-                else if (Readline.StartsWith("level-name")) Readline = $"level-name={level_name}";
+
+                properties.Add(Readline);
+                /*else if (Readline.StartsWith("level-name")) Readline = $"level-name={level_name}";
                 else if (Readline.StartsWith("difficulty")) Readline = $"difficulty={ReturnDifficulty(difficultyBox.SelectedIndex)}";
                 else if (Readline.StartsWith("spawn-protection")) Readline = $"spawn-protection={SpawnProtectionBox.Text}";
                 else if (Readline.StartsWith("gamemode")) Readline = $"gamemode={ReturnGamemode(initalgamemodeBox.SelectedIndex)}";
@@ -371,8 +402,10 @@ namespace ServerManager
                 else if (Readline.StartsWith("enable-command-block")) Readline = $"enable-command-block={ReturnCondition(commandblockBox.SelectedIndex)}";
                 else if (Readline.StartsWith("hardcore")) Readline = $"hardcore={ReturnCondition(hardcoreBox.SelectedIndex)}";
                 else if (Readline.StartsWith("level-type")) Readline = $"level-type={ReturnLeveltype(leveltypebox.SelectedIndex)}";
-                properties += Readline + "\n";
+                properties += Readline + "\n";*/
             }
+
+            return_property(properties);
 
             fs = new FileStream(server_properties_path, FileMode.Create); //리사이클링을 코딩에서도 제대로 실현중 ㅋㅋ
             StreamWriter sw = new StreamWriter(fs);
@@ -762,12 +795,16 @@ namespace ServerManager
                     InitializeComponent();
         }
     }
+    public class property
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
+    }
 }
 
 //이런 개 망할 스파게뤼 코드 같은;
 
-//2021/11/16 00:31 망할 스파게뤼 코드 하나하나 다 폈고, 구조적으로 이상한것도 다 수정함
-//2021/11/16 00:39 아 봉림중이 수정하러 설레는 맘에 갈려했더만 망할 디버깅 해야겠네;
+//2021/11/16 00:31 망할 스파게뤼 코드 하나하나 다 폈고, 구조적으로 디버깅 해야겠네;
 
 //2021/11/16 01:58 미안 내가 졌다 디버깅 오늘 학교 갔다와서 해야겠;
 /*문제점 : activeManage에서 false값일때 group들이 minecraftsaves, serversaves만 적용되고
