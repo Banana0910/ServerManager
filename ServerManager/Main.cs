@@ -38,23 +38,37 @@ namespace ServerManager
         // 문제 : 각 property 형식마다 반환하는 value가 다름
        
         // 프로퍼티 관리 함수
-        private List<string> return_property(List<string> list)
+        private void return_property(ref List<string> list)
         {
             /* textbox 형식
                 SpawnProtectionBox
                 maxplayerBox
                 viewdistanceBox
             */
-            Control[] properties = new Control[]
+            List<string> Properties = new List<string>();
+            Control[] controls = new Control[]
             { 
                 difficultyBox, SpawnProtectionBox, initalgamemodeBox, forcegamemodeBox, maxplayerBox,
                 viewdistanceBox, onlinemodeBox, oplevelBox, pvpBox, spawnmonsterBox, spawnnpcBox,
                 spawnanimalBox, commandblockBox, hardcoreBox, leveltypebox 
             };
-            foreach (Control cb in properties)
+            foreach (Control control in controls)
             {
+                if (control is ComboBox)
+                {
+                    ComboBox target = (ComboBox)control;
+                    int index = list.FindIndex(x => x.StartsWith(target.Tag.ToString()));
+                    if (index == -1) list.Add($"{target.Tag}={target.SelectedValue}");
+                    else list[index] = $"{target.Tag}={target.SelectedValue}";
+                }  
+                else if (control is TextBox)  
+                {
+                    TextBox target = (TextBox)control;
+                    int index = list.FindIndex(x => x.StartsWith(target.Tag.ToString()));
+                    if (index == -1) list.Add($"{target.Tag}={target.Text}");
+                    else list[index] = $"{target.Tag}={target.Text}";
+                }
             }
-            return null;
         }
 
         // 확인 함수
@@ -371,8 +385,7 @@ namespace ServerManager
         }
         private void WriteProperties()
         {
-            //string properties = "";
-            List<string> properties = new List<string>();
+            string properties = "";
             FileStream fs = new FileStream(server_properties_path, FileMode.Open);
             StreamReader sr = new StreamReader(fs);
             while (true)
@@ -384,9 +397,7 @@ namespace ServerManager
                     fs.Close();
                     break;
                 }
-
-                properties.Add(Readline);
-                /*else if (Readline.StartsWith("level-name")) Readline = $"level-name={level_name}";
+                else if (Readline.StartsWith("level-name")) Readline = $"level-name={level_name}";
                 else if (Readline.StartsWith("difficulty")) Readline = $"difficulty={ReturnDifficulty(difficultyBox.SelectedIndex)}";
                 else if (Readline.StartsWith("spawn-protection")) Readline = $"spawn-protection={SpawnProtectionBox.Text}";
                 else if (Readline.StartsWith("gamemode")) Readline = $"gamemode={ReturnGamemode(initalgamemodeBox.SelectedIndex)}";
@@ -402,10 +413,8 @@ namespace ServerManager
                 else if (Readline.StartsWith("enable-command-block")) Readline = $"enable-command-block={ReturnCondition(commandblockBox.SelectedIndex)}";
                 else if (Readline.StartsWith("hardcore")) Readline = $"hardcore={ReturnCondition(hardcoreBox.SelectedIndex)}";
                 else if (Readline.StartsWith("level-type")) Readline = $"level-type={ReturnLeveltype(leveltypebox.SelectedIndex)}";
-                properties += Readline + "\n";*/
+                properties += Readline + "\n";
             }
-
-            return_property(properties);
 
             fs = new FileStream(server_properties_path, FileMode.Create); //리사이클링을 코딩에서도 제대로 실현중 ㅋㅋ
             StreamWriter sw = new StreamWriter(fs);
@@ -626,7 +635,7 @@ namespace ServerManager
             RefreshMinecraftSaves();
         }
         private void MinecraftSaves_List_DragEnter(object sender, DragEventArgs e)
-        {
+        {   
             e.Effect = DragDropEffects.Move;
         }
         private void plugin_List_DragDrop(object sender, DragEventArgs e)
@@ -795,10 +804,22 @@ namespace ServerManager
                     InitializeComponent();
         }
     }
-    public class property
+
+    public class Property
     {
-        public string Name { get; set; }
-        public string Value { get; set; }
+        public string RealValue { get; set; }
+        public string ViewValue { get; set; }
+
+        /// <summary>
+        /// 프로퍼티 값을 정의 합니다.
+        /// </summary>
+        /// <param name="Real">실제로 properties파일에 저장될 값입니다.</param>
+        /// <param name="View">보여질 값입니다.</param>
+        public Property(string Real, string View)
+        {
+            RealValue = Real;
+            ViewValue = View;
+        }
     }
 }
 

@@ -513,15 +513,19 @@
             this.leveltypebox.BackColor = System.Drawing.Color.White;
             this.leveltypebox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.leveltypebox.FormattingEnabled = true;
-            this.leveltypebox.Items.AddRange(new object[] {
-            "평지",
-            "일반",
-            "레거시"});
             this.leveltypebox.Location = new System.Drawing.Point(104, 410);
             this.leveltypebox.Name = "leveltypebox";
             this.leveltypebox.Size = new System.Drawing.Size(81, 22);
             this.leveltypebox.TabIndex = 35;
             this.leveltypebox.Tag = "level-type";
+            this.leveltypebox.DataSource = new Property[]
+            {
+                new Property("FLAT", "평지"),
+                new Property("DEFAULT", "일반"),
+                new Property("LEGACY", "레거시")
+            };
+            this.leveltypebox.ValueMember = "RealValue";
+            this.leveltypebox.DisplayMember = "ViewValue";
             // 
             // label22
             // 
@@ -537,14 +541,18 @@
             this.hardcoreBox.BackColor = System.Drawing.Color.White;
             this.hardcoreBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.hardcoreBox.FormattingEnabled = true;
-            this.hardcoreBox.Items.AddRange(new object[] {
-            "활성화",
-            "비활성화"});
             this.hardcoreBox.Location = new System.Drawing.Point(104, 382);
             this.hardcoreBox.Name = "hardcoreBox";
             this.hardcoreBox.Size = new System.Drawing.Size(81, 22);
             this.hardcoreBox.TabIndex = 33;
             this.hardcoreBox.Tag = "hardcore";
+            this.hardcoreBox.DataSource = new Property[]
+            {
+                new Property("true", "활성화"),
+                new Property("false", "비활성화")
+            };
+            this.hardcoreBox.ValueMember = "RealValue";
+            this.hardcoreBox.DisplayMember = "ViewValue";
             // 
             // label18
             // 
@@ -560,14 +568,18 @@
             this.commandblockBox.BackColor = System.Drawing.Color.White;
             this.commandblockBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.commandblockBox.FormattingEnabled = true;
-            this.commandblockBox.Items.AddRange(new object[] {
-            "허용",
-            "제한"});
             this.commandblockBox.Location = new System.Drawing.Point(104, 354);
             this.commandblockBox.Name = "commandblockBox";
             this.commandblockBox.Size = new System.Drawing.Size(81, 22);
             this.commandblockBox.TabIndex = 31;
             this.commandblockBox.Tag = "enable-command-block";
+            this.commandblockBox.DataSource = new Property[]
+            {
+                new Property("true", "허용"),
+                new Property("false", "제한")
+            };
+            this.commandblockBox.ValueMember = "RealValue";
+            this.commandblockBox.DisplayMember = "ViewValue";
             // 
             // label17
             // 
@@ -612,14 +624,18 @@
             this.forcegamemodeBox.BackColor = System.Drawing.Color.White;
             this.forcegamemodeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.forcegamemodeBox.FormattingEnabled = true;
-            this.forcegamemodeBox.Items.AddRange(new object[] {
-            "활성화",
-            "비활성화"});
             this.forcegamemodeBox.Location = new System.Drawing.Point(104, 102);
             this.forcegamemodeBox.Name = "forcegamemodeBox";
             this.forcegamemodeBox.Size = new System.Drawing.Size(81, 22);
             this.forcegamemodeBox.TabIndex = 26;
             this.forcegamemodeBox.Tag = "force-gamemode";
+            this.forcegamemodeBox.DataSource = new Property[]
+            {
+                new Property("true", "활성화"),
+                new Property("false", "비활성화")
+            };
+            this.forcegamemodeBox.ValueMember = "RealValue";
+            this.forcegamemodeBox.DisplayMember = "ViewValue";
             // 
             // label15
             // 
@@ -635,13 +651,16 @@
             this.spawnnpcBox.BackColor = System.Drawing.Color.White;
             this.spawnnpcBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.spawnnpcBox.FormattingEnabled = true;
-            this.spawnnpcBox.Items.AddRange(new object[] {
-            "활성화",
-            "비활성화"});
             this.spawnnpcBox.Location = new System.Drawing.Point(104, 298);
             this.spawnnpcBox.Name = "spawnnpcBox";
             this.spawnnpcBox.Size = new System.Drawing.Size(81, 22);
             this.spawnnpcBox.TabIndex = 24;
+            this.spawnnpcBox.Tag = "spawn-npcs";
+            this.spawnnpcBox.DataSource = new Property[]
+            {
+                new Property("true", "활성화"),
+                new Property("false", "비활성화")
+            };
             // 
             // label14
             // 
@@ -657,14 +676,18 @@
             this.spawnmonsterBox.BackColor = System.Drawing.Color.White;
             this.spawnmonsterBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.spawnmonsterBox.FormattingEnabled = true;
-            this.spawnmonsterBox.Items.AddRange(new object[] {
-            "활성화",
-            "비활성화"});
             this.spawnmonsterBox.Location = new System.Drawing.Point(104, 270);
             this.spawnmonsterBox.Name = "spawnmonsterBox";
             this.spawnmonsterBox.Size = new System.Drawing.Size(81, 22);
             this.spawnmonsterBox.TabIndex = 22;
             this.spawnmonsterBox.Tag = "spawn-monsters";
+            this.spawnmonsterBox.DataSource = new Property[]
+            {
+                new Property("true", "활성화"),
+                new Property("false", "비활성화")
+            };
+            this.spawnmonsterBox.ValueMember = "RealValue";
+            this.spawnmonsterBox.DisplayMember = "ViewValue";
             // 
             // label13
             // 
@@ -680,14 +703,18 @@
             this.pvpBox.BackColor = System.Drawing.Color.White;
             this.pvpBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.pvpBox.FormattingEnabled = true;
-            this.pvpBox.Items.AddRange(new object[] {
-            "허용",
-            "제한"});
             this.pvpBox.Location = new System.Drawing.Point(104, 242);
             this.pvpBox.Name = "pvpBox";
             this.pvpBox.Size = new System.Drawing.Size(81, 22);
             this.pvpBox.TabIndex = 20;
             this.pvpBox.Tag = "pvp";
+            this.pvpBox.DataSource = new Property[]
+            {
+                new Property("true", "허용"),
+                new Property("false", "제한")
+            };
+            this.pvpBox.ValueMember = "RealValue";
+            this.pvpBox.DisplayMember = "ViewValue";
             // 
             // label12
             // 
@@ -714,6 +741,16 @@
             this.oplevelBox.Size = new System.Drawing.Size(81, 22);
             this.oplevelBox.TabIndex = 18;
             this.oplevelBox.Tag = "op-permission-level";
+            this.oplevelBox.DataSource = new Property[]
+            {
+                new Property("0", "0단계"),
+                new Property("1", "1단계"),
+                new Property("2", "2단계"),
+                new Property("3", "3단계"),
+                new Property("4", "4단계")
+            };
+            this.oplevelBox.ValueMember = "RealValue";
+            this.oplevelBox.DisplayMember = "ViewValue";
             // 
             // label11
             // 
@@ -729,14 +766,18 @@
             this.spawnanimalBox.BackColor = System.Drawing.Color.White;
             this.spawnanimalBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.spawnanimalBox.FormattingEnabled = true;
-            this.spawnanimalBox.Items.AddRange(new object[] {
-            "활성화",
-            "비활성화"});
             this.spawnanimalBox.Location = new System.Drawing.Point(104, 326);
             this.spawnanimalBox.Name = "spawnanimalBox";
             this.spawnanimalBox.Size = new System.Drawing.Size(81, 22);
             this.spawnanimalBox.TabIndex = 16;
             this.spawnanimalBox.Tag = "spawn-animals";
+            this.spawnanimalBox.DataSource = new Property[]
+            {
+                new Property("true", "활성화"),
+                new Property("false", "비활성화")
+            };
+            this.spawnanimalBox.ValueMember = "RealValue";
+            this.spawnanimalBox.DisplayMember = "ViewValue";
             // 
             // onlinemodeBox
             // 
@@ -751,6 +792,13 @@
             this.onlinemodeBox.Size = new System.Drawing.Size(81, 22);
             this.onlinemodeBox.TabIndex = 15;
             this.onlinemodeBox.Tag = "online-mode";
+            this.onlinemodeBox.DataSource = new Property[]
+            {
+                new Property("true", "허용"),
+                new Property("false", "제한")
+            };
+            this.onlinemodeBox.ValueMember = "RealValue";
+            this.onlinemodeBox.DisplayMember = "ViewValue";
             // 
             // label10
             // 
@@ -822,16 +870,20 @@
             this.initalgamemodeBox.BackColor = System.Drawing.Color.White;
             this.initalgamemodeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.initalgamemodeBox.FormattingEnabled = true;
-            this.initalgamemodeBox.Items.AddRange(new object[] {
-            "서바이벌",
-            "크레이티브",
-            "모험자",
-            "관전자"});
             this.initalgamemodeBox.Location = new System.Drawing.Point(104, 74);
             this.initalgamemodeBox.Name = "initalgamemodeBox";
             this.initalgamemodeBox.Size = new System.Drawing.Size(81, 22);
             this.initalgamemodeBox.TabIndex = 6;
             this.initalgamemodeBox.Tag = "gamemode";
+            this.initalgamemodeBox.DataSource = new Property[]
+            {
+                new Property("survival", "서바이벌"),
+                new Property("creative", "크리에이티브"),
+                new Property("adventure", "모험자"),
+                new Property("spectator", "관전자")
+            };
+            this.initalgamemodeBox.ValueMember = "RealValue";
+            this.initalgamemodeBox.DisplayMember = "ViewValue";
             // 
             // label5
             // 
@@ -875,16 +927,20 @@
             this.difficultyBox.BackColor = System.Drawing.Color.White;
             this.difficultyBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.difficultyBox.FormattingEnabled = true;
-            this.difficultyBox.Items.AddRange(new object[] {
-            "평화로움",
-            "쉬움",
-            "보통",
-            "어려움"});
             this.difficultyBox.Location = new System.Drawing.Point(104, 19);
             this.difficultyBox.Name = "difficultyBox";
             this.difficultyBox.Size = new System.Drawing.Size(81, 22);
             this.difficultyBox.TabIndex = 1;
             this.difficultyBox.Tag = "difficulty";
+            this.difficultyBox.DataSource = new Property[]
+            {
+                new Property("peaceful", "평화로움"),
+                new Property("easy", "쉬움"),
+                new Property("normal", "보통"),
+                new Property("hard", "어려움")
+            };
+            this.difficultyBox.ValueMember = "RealValue";
+            this.difficultyBox.DisplayMember = "ViewValue";
             // 
             // label2
             // 
