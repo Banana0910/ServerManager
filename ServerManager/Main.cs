@@ -32,19 +32,9 @@ namespace ServerManager
 
         //             함수 파트               //
 
-        // 목적 : properties에 원하는 key가 없을 경우, 추가를 해야함
-        // 목적을 이룰려면 리스트로 미리 불러오는게 맞나..?
-
-        // 문제 : 각 property 형식마다 반환하는 value가 다름
-       
-        // 프로퍼티 관리 함수
-        private void return_property(ref List<string> list)
+        // 프로퍼티 관련 함수
+        private void Return_property(ref List<string> list)
         {
-            /* textbox 형식
-                SpawnProtectionBox
-                maxplayerBox
-                viewdistanceBox
-            */
             List<string> Properties = new List<string>();
             Control[] controls = new Control[]
             { 
@@ -54,19 +44,47 @@ namespace ServerManager
             };
             foreach (Control control in controls)
             {
+                int index = list.FindIndex(x => x.StartsWith(control.Tag.ToString()));
                 if (control is ComboBox)
                 {
                     ComboBox target = (ComboBox)control;
-                    int index = list.FindIndex(x => x.StartsWith(target.Tag.ToString()));
                     if (index == -1) list.Add($"{target.Tag}={target.SelectedValue}");
                     else list[index] = $"{target.Tag}={target.SelectedValue}";
                 }  
                 else if (control is TextBox)  
                 {
                     TextBox target = (TextBox)control;
-                    int index = list.FindIndex(x => x.StartsWith(target.Tag.ToString()));
                     if (index == -1) list.Add($"{target.Tag}={target.Text}");
                     else list[index] = $"{target.Tag}={target.Text}";
+                }
+            }
+        }
+
+        private void Inject_property(List<string> list)
+        {
+            Control[] controls = new Control[]
+            { 
+                difficultyBox, SpawnProtectionBox, initalgamemodeBox, forcegamemodeBox, maxplayerBox,
+                viewdistanceBox, onlinemodeBox, oplevelBox, pvpBox, spawnmonsterBox, spawnnpcBox,
+                spawnanimalBox, commandblockBox, hardcoreBox, leveltypebox 
+            };
+            foreach (Control control in controls)
+            {
+                string[] splited = list.Find(x => x.StartsWith(control.Tag.ToString())).Split('=');
+                if (splited != null)
+                {
+                    if (control is ComboBox)
+                    {
+                        try
+                        {
+                            ((ComboBox)control).SelectedValue = splited[1];
+                            if (((ComboBox)control).SelectedIndex == -1)
+                                ((ComboBox)control).SelectedIndex = int.Parse(splited[1]); // 만약 value설정이 안통한다? 그럼 케이스는 두가지 오류또는 index형식인것이다, 오류는 try-catch로 잡고, index 형식이면 index로 selectedindex설정 하면 끝
+                        }
+                        catch(Exception e) { MessageBox.Show($"{control.Tag.ToString()}의 설정 적용 중 오류 발생 : {e}", "ServerManager", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+                    }
+                    else if (control is TextBox)
+                        ((TextBox)control).Text = splited[1];
                 }
             }
         }
@@ -168,6 +186,7 @@ namespace ServerManager
         { 
             if (!string.IsNullOrWhiteSpace(server_properties_path))
             {
+                List<string> properties = new List<string>();
                 FileStream fs = new FileStream(server_properties_path, FileMode.Open);
                 StreamReader sr = new StreamReader(fs);
                 while (true)
@@ -179,24 +198,10 @@ namespace ServerManager
                         fs.Close();
                         break;
                     }  //자~ 11/15 지금 부터 간략히 코드 수정하겠슴당
-                    else if (Readline.StartsWith("level-name"))level_name = Readline.Split('=')[1];
-                    else if (Readline.StartsWith("difficulty"))difficultyBox.SelectedIndex = OutputDifficulty(Readline.Split('=')[1]);
-                    else if (Readline.StartsWith("spawn-protection")) SpawnProtectionBox.Text = Readline.Split('=')[1];
-                    else if (Readline.StartsWith("gamemode")) initalgamemodeBox.SelectedIndex = OutputGamemode(Readline.Split('=')[1]);
-                    else if (Readline.StartsWith("force-gamemode")) forcegamemodeBox.SelectedIndex = OutputCondition(Readline.Split('=')[1]);
-                    else if (Readline.StartsWith("max-players")) maxplayerBox.Text = Readline.Split('=')[1];
-                    else if (Readline.StartsWith("view-distance")) viewdistanceBox.Text = Readline.Split('=')[1];
-                    else if (Readline.StartsWith("online-mode")) onlinemodeBox.SelectedIndex = OutputCondition(Readline.Split('=')[1]);
-                    else if (Readline.StartsWith("op-permission-level")) oplevelBox.Text = Readline.Split('=')[1];
-                    else if (Readline.StartsWith("pvp")) pvpBox.SelectedIndex = OutputCondition(Readline.Split('=')[1]);
-                    else if (Readline.StartsWith("spawn-monsters")) spawnmonsterBox.SelectedIndex = OutputCondition(Readline.Split('=')[1]);
-                    else if (Readline.StartsWith("spawn-npcs")) spawnnpcBox.SelectedIndex = OutputCondition(Readline.Split('=')[1]);
-                    else if (Readline.StartsWith("spawn-animals")) spawnanimalBox.SelectedIndex = OutputCondition(Readline.Split('=')[1]);
-                    else if (Readline.StartsWith("enable-command-block"))  commandblockBox.SelectedIndex = OutputCondition(Readline.Split('=')[1]);
-                    else if (Readline.StartsWith("hardcore"))  hardcoreBox.SelectedIndex = OutputCondition(Readline.Split('=')[1]);
-                    else if (Readline.StartsWith("level-type"))  leveltypebox.SelectedIndex = OutputLeveltype(Readline.Split('=')[1]);
+                    properties.Add(Readline);
                     //엄.. 수정하니까 겁나 복잡해보이네
                 }
+                Inject_property(properties);
             }
         }
         private void RefreshMinecraftSaves()
@@ -385,7 +390,7 @@ namespace ServerManager
         }
         private void WriteProperties()
         {
-            string properties = "";
+            List<string> properties = new List<string>();
             FileStream fs = new FileStream(server_properties_path, FileMode.Open);
             StreamReader sr = new StreamReader(fs);
             while (true)
@@ -397,31 +402,15 @@ namespace ServerManager
                     fs.Close();
                     break;
                 }
-                else if (Readline.StartsWith("level-name")) Readline = $"level-name={level_name}";
-                else if (Readline.StartsWith("difficulty")) Readline = $"difficulty={ReturnDifficulty(difficultyBox.SelectedIndex)}";
-                else if (Readline.StartsWith("spawn-protection")) Readline = $"spawn-protection={SpawnProtectionBox.Text}";
-                else if (Readline.StartsWith("gamemode")) Readline = $"gamemode={ReturnGamemode(initalgamemodeBox.SelectedIndex)}";
-                else if (Readline.StartsWith("force-gamemode")) Readline = $"force-gamemode={ReturnCondition(forcegamemodeBox.SelectedIndex)}";
-                else if (Readline.StartsWith("max-players")) Readline = $"max-players={maxplayerBox.Text}";
-                else if (Readline.StartsWith("view-distance")) Readline = $"view-distance={viewdistanceBox.Text}";
-                else if (Readline.StartsWith("online-mode")) Readline = $"online-mode={ReturnCondition(onlinemodeBox.SelectedIndex)}";
-                else if (Readline.StartsWith("op-permission-level")) Readline = $"op-permission-level={oplevelBox.SelectedIndex}";
-                else if (Readline.StartsWith("pvp")) Readline = $"pvp={ReturnCondition(pvpBox.SelectedIndex)}";
-                else if (Readline.StartsWith("spawn-monsters")) Readline = $"spawn-monsters={ReturnCondition(spawnmonsterBox.SelectedIndex)}";
-                else if (Readline.StartsWith("spawn-npcs")) Readline = $"spawn-npcs={ReturnCondition(spawnnpcBox.SelectedIndex)}";
-                else if (Readline.StartsWith("spawn-animals")) Readline = $"spawn-animals={ReturnCondition(spawnanimalBox.SelectedIndex)}";
-                else if (Readline.StartsWith("enable-command-block")) Readline = $"enable-command-block={ReturnCondition(commandblockBox.SelectedIndex)}";
-                else if (Readline.StartsWith("hardcore")) Readline = $"hardcore={ReturnCondition(hardcoreBox.SelectedIndex)}";
-                else if (Readline.StartsWith("level-type")) Readline = $"level-type={ReturnLeveltype(leveltypebox.SelectedIndex)}";
-                properties += Readline + "\n";
             }
+            Return_property(ref properties);
 
             fs = new FileStream(server_properties_path, FileMode.Create); //리사이클링을 코딩에서도 제대로 실현중 ㅋㅋ
             StreamWriter sw = new StreamWriter(fs);
-            sw.Write(properties);
+            foreach (string property in properties)
+                sw.WriteLine(property);
             sw.Close();
             fs.Close();
-
         }
 
         //                상호작용 파트                 //
@@ -802,23 +791,6 @@ namespace ServerManager
             if (e.KeyCode == Keys.F5)
                 if (MessageBox.Show("초기화 시키시겠습니까?", "ServerManager", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                     InitializeComponent();
-        }
-    }
-
-    public class Property
-    {
-        public string RealValue { get; set; }
-        public string ViewValue { get; set; }
-
-        /// <summary>
-        /// 프로퍼티 값을 정의 합니다.
-        /// </summary>
-        /// <param name="Real">실제로 properties파일에 저장될 값입니다.</param>
-        /// <param name="View">보여질 값입니다.</param>
-        public Property(string Real, string View)
-        {
-            RealValue = Real;
-            ViewValue = View;
         }
     }
 }

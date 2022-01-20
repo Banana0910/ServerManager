@@ -661,6 +661,8 @@
                 new Property("true", "활성화"),
                 new Property("false", "비활성화")
             };
+            this.spawnnpcBox.ValueMember = "RealValue";
+            this.spawnnpcBox.DisplayMember = "ViewValue";
             // 
             // label14
             // 
